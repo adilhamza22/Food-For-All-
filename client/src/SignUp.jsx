@@ -1,107 +1,140 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import './Auth.scss'
+import { Button, Form } from 'react-bootstrap';
 
-const Signup = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: '',
-    userType: 'individual',
-  });
+const SignupForm = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
+  const [imageURL, setImageURL] = useState('');
+  const [userType, setUserType] = useState('individual');
 
-  const { name, email, password, password2, userType } = formData;
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const userData = {
+      name,
+      email,
+      password,
+      userType,
+      address,
+      phone,
+      imageURL,
+    };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (password !== password2) {
-      console.log('Passwords do not match');
-    } else {
-      const newUser = {
-        name,
-        email,
-        password,
-        userType,
-      };
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
-        const body = JSON.stringify(newUser);
-        const res = await axios.post('hhtp://localhost:8080/users', body, config);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      }
-    }
+    fetch("/http:localhost:8080/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
   };
 
+
   return (
-    <div>
-      <h1>Sign Up</h1>
-      <form onSubmit={(e) => onSubmit(e)}>
-        <div>
-          <label>Name</label>
-          <input
-            type='text'
-            name='name'
-            value={name}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div>
-          <label>Email</label>
-          <input
-            type='email'
-            name='email'
-            value={email}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div>
-          <label>Confirm Password</label>
-          <input
-            type='password'
-            name='password2'
-            value={password2}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div>
-          <label>User Type:</label>
-          <select name='userType' value={userType} onChange={(e) => onChange(e)}>
-            <option value='individual'>Individual Donor</option>
-            <option value='restaurant'>Restaurant Donor</option>
-            <option value='ngo'>NGO</option>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="name">
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="email">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control
+          type="email"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </Form.Group>
+      <Form.Group>
+      <Form.Label>Type</Form.Label>
+
+          <select
+            id="userType"
+            value={userType}
+            onChange={(e) => setUserType(e.target.value)}
+          >
+            <option value="">Select User Type</option>
+            <option value="NGO">NGO</option>
+            <option value="Individual">Individual</option>
           </select>
-        </div>
-        <button type='submit'>Sign Up</button>
-      </form>
-      <p>
-        Already have an account? <Link to='/login'>Sign In</Link>
-      </p>
-    </div>
+        </Form.Group>
+      <Form.Group controlId="address">
+        <Form.Label>Address</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="phone">
+        <Form.Label>Phone number</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter phone number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="imageURL">
+        <Form.Label>Image URL</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter image URL"
+          value={imageURL}
+          onChange={(e) => setImageURL(e.target.value)}
+        />
+      </Form.Group>
+
+      <Form.Group controlId="userType">
+        <Form.Label>User Type</Form.Label>
+        <Form.Check
+          type="radio"
+          label="Individual"
+          name="userType"
+          value="individual"
+          checked={userType === 'individual'}
+          onChange={(e) => setUserType(e.target.value)}
+        />
+        <Form.Check
+          type="radio"
+          label="NGO"
+          name="userType"
+          value="ngo"
+          checked={userType === 'ngo'}
+          onChange={(e) => setUserType(e.target.value)}
+        />
+      </Form.Group>
+
+      <Button variant="primary" type="submit">
+        Sign up
+      </Button>
+    </Form>
   );
 };
 
-export default Signup;
+export default SignupForm;

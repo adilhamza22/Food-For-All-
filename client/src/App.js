@@ -8,6 +8,7 @@ import Dashboard from './DashBoard';
 import Restaurants from './Restaurants';
 import Donors from './Donor';
 import NGO from './NGO';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -27,7 +28,6 @@ function App() {
        <Route path="/restaurants" element={<Restaurants/>} />
        <Route path="/donors" element={<Donors/>} />
        <Route path="/NGO" element={<NGO/>} />
-
        <Route path="/" element={<Dashboard />} />
 
     </Routes>

@@ -4,59 +4,75 @@ import {connectDB} from './config/db.js';
 import { Router } from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import Restaurant from './client/src/models/restaurants.js';
+import User from './client/src/models/users.js';
+import NGO from './client/src/models/ngo.js';
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+// app.get('/',(req,res)=> res.send('Hello World. . .'));
 
-
-app.get('/',(req,res)=> res.send('Hello World. . .'));
 const port = process.env.port || 8080;
 app.use(Router);
 connectDB();
 
-//User schema
-const userSchema = new mongoose.Schema({
-    email:{type:String, required:true},
-    password:{type:String, required:true,length:8},
-
-});
-//define user model
-const User = mongoose.model('User', userSchema);
-
-// Handle user signup
-app.post('http://localhost:8080/signup', async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
-      const existingUser = await User.findOne({ email });
-  
-      if (existingUser) {
-        return res.status(400).json({ message: 'User already exists' });
-      }
-  
-      const user = new User({ email, password });
-      await user.save();
-      res.status(201).json({ message: 'User created' });
-    } catch (error) {
-      res.status(500).json({ message: 'Server error' });
-    }
-});
-
-// Handle user login
-app.post('http://localhost:8080/login', async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
-      const user = await User.findOne({ email });
-  
-      if (!user || user.password !== password) {
-        return res.status(400).json({ message: 'Invalid email or password' });
-      }
-  
-      res.json({ message: 'Login successful' });
-    } catch (error) {
-      res.status(500).json({ message: 'Server error' });
-    }
+// Configure local authentication strategy for User
+passport.use('user-local', new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+  User.findOne({ email }, (err, user) => {
+    if (err) return done(err);
+    if (!user) return done(null, false, { message: 'Incorrect email or password' });
+    if (user.password !== password) return done(null, false, { message: 'Incorrect email or password' });
+    return done(null, user);
   });
+}));
+
+// Configure local authentication strategy for Restaurant
+passport.use('restaurant-local', new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+  Restaurant.findOne({ email }, (err, restaurant) => {
+    if (err) return done(err);
+    if (!restaurant) return done(null, false, { message: 'Incorrect email or password' });
+    if (restaurant.password !== password) return done(null, false, { message: 'Incorrect email or password' });
+    return done(null, restaurant);
+  });
+}));
+
+// Configure local authentication strategy for NGO
+passport.use('ngo-local', new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+  NGO.findOne({ email }, (err, ngo) => {
+    if (err) return done(err);
+    if (!ngo) return done(null, false, { message: 'Incorrect email or password' });
+    if (ngo.password !== password) return done(null, false, { message: 'Incorrect email or password' });
+    return done(null, ngo);
+  });
+}));
+
+// Serialize user object
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+// Deserialize user object
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
+
+app.get('/restaurants', async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({});
+    res.send(restaurants);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error retrieving restaurants from database');
+  }
+});
+
 app.listen(port,()=>console.log(`Server is logged at port${port}`));
+
+export default App;

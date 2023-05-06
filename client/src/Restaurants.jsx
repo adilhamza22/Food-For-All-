@@ -1,45 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
-const restaurants = [
-  {
-    id: 1,
-    name: 'Pizza Place',
-    address: '123 Main St',
-    phone: '555-555-1234',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 2,
-    name: 'Burger Joint',
-    address: '456 Oak Ave',
-    phone: '555-555-5678',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 3,
-    name: 'Taco Stand',
-    address: '789 Elm St',
-    phone: '555-555-9012',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-];
+function Restaurants() {
+  const [restaurants, setRestaurants] = useState([]);
 
-const Restaurants = () => {
+  useEffect(() => {
+    axios.get('/restaurants')
+      .then(res => setRestaurants(res.data))
+      .catch(err => console.error(err));
+  }, []);
+
   return (
-    <div>
-      <h2>Restaurants</h2>
-      <ul>
-        {restaurants.map((restaurant) => (
-          <li key={restaurant.id}>
-            <h3>{restaurant.name}</h3>
-            <p>{restaurant.address}</p>
-            <p>{restaurant.phone}</p>
-            <img src={restaurant.imageUrl} alt={restaurant.name} />
-          </li>
+    <Container>
+      <h1 className="mt-5 mb-4">Restaurants</h1>
+      <Row>
+        {restaurants.map((restaurant, index) => (
+          <Col md={4} key={index} className="mb-4">
+            <Card>
+              <Card.Img variant="top" src={restaurant.imageURL} alt={restaurant.name} />
+              <Card.Body>
+                <Card.Title>{restaurant.name}</Card.Title>
+                <Card.Text>
+                  {restaurant.address}<br />
+                  {restaurant.phone}<br />
+                  Rating: {restaurant.rating}
+                </Card.Text>
+                <Button variant="primary">View Menu</Button>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </ul>
-    </div>
+      </Row>
+    </Container>
   );
-};
+}
 
 export default Restaurants;

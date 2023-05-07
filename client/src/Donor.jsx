@@ -1,5 +1,5 @@
-import React from 'react';
-import React, { useState, useEffect } from 'react';
+
+import {React, useState, useEffect } from 'react';
 
 const Donors = () => {
   const [donors, setDonors] = useState([]);

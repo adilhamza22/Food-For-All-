@@ -9,10 +9,16 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import Restaurant from './client/src/models/restaurants.js';
 import User from './client/src/models/users.js';
 import NGO from './client/src/models/ngo.js';
-
+import session from 'express-session'
 const app = express();
-
 app.use(bodyParser.json());
+
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 // app.get('/',(req,res)=> res.send('Hello World. . .'));

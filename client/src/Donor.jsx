@@ -1,36 +1,16 @@
 import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Donors = () => {
-  const donors = [
-    {
-      id: 1,
-      name: 'John Doe',
-      address: '1234 Main Street',
-      phone: '555-555-1234',
-      hasFoodToDonate: true
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      address: '5678 Elm Street',
-      phone: '555-555-5678',
-      hasFoodToDonate: false
-    },
-    {
-      id: 3,
-      name: 'Bob Johnson',
-      address: '9101 Oak Street',
-      phone: '555-555-9101',
-      hasFoodToDonate: true
-    },
-    {
-      id: 4,
-      name: 'Samantha Lee',
-      address: '1212 Maple Street',
-      phone: '555-555-1212',
-      hasFoodToDonate: true
-    }
-  ];
+  const [donors, setDonors] = useState([]);
+
+  useEffect(() => {
+    // Fetch donors data from API endpoint
+    fetch('/donors')
+      .then(response => response.json())
+      .then(data => setDonors(data))
+      .catch(error => console.error(error));
+  }, []);
 
   return (
     <div>

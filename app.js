@@ -72,7 +72,18 @@ app.get('/restaurants', async (req, res) => {
     res.status(500).send('Error retrieving restaurants from database');
   }
 });
+app.get('/donors', async (req, res) => {
+  // Find all donors in the database
+  const users= await User.find({}, (err, donors) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+    } else {
+      res.json(donors);
+    }
+  });
+});
 
 app.listen(port,()=>console.log(`Server is logged at port${port}`));
 
-export default App;
+export default app;

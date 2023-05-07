@@ -12,6 +12,8 @@ function NavBar() {
             <Nav.Link href="/">Dashboard</Nav.Link>
             <Nav.Link href="restaurants">Restaurants</Nav.Link>
             <Nav.Link href="donors">Donors</Nav.Link>
+            <Nav.Link href="NGO">Donate to NGOS</Nav.Link>
+
           </Nav>
         </Container>
       </Navbar>

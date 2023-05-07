@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 // import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router, Route, Switch, Redirect, Routes } from 'react-router-dom';
 import './App.css';
-import Signup from './SignUp';
-import Login from './Login';
-import Dashboard from './DashBoard';
-import Restaurants from './Restaurants';
-import Donors from './Donor';
-import NGO from './NGO';
+import Signup from './SignUp.jsx';
+import Login from './Login.jsx';
+import Dashboard from './DashBoard.jsx';
+import Restaurants from './Restaurants.jsx';
+import Donors from './Donor.jsx';
+import NGO from './NGO.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {

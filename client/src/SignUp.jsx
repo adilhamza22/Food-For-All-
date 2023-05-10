@@ -160,6 +160,15 @@ function SignupForm() {
   const onLog =(e)=>{
     window.location.href = '/signin';
   };
+
+//  // Save user data to session storage
+//  sessionStorage.setItem('userData', JSON.stringify(userData));
+//  // Redirect to the signin page
+//  window.location.href = '/signin';
+
+
+
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const users = JSON.parse(localStorage.getItem(userType)) || [];
@@ -172,13 +181,21 @@ function SignupForm() {
       return;
     }
 
-    const newUser = { email, password };
+    const newUser = { email, password,userType };
     users.push(newUser);
+    sessionStorage.setItem(newUser,JSON.stringify(users));
     // console.log(users[0]);
-    localStorage.setItem(userType, JSON.stringify(users));
+    // localStorage.setItem(userType, JSON.stringify(users));
     alert('User signed up successfully!');
     window.location.href= '/signin';
   };
+
+  // const handleSignup = (userData) => {
+  //   // Save user data to session storage
+  //   sessionStorage.setItem('userData', JSON.stringify(userData));
+  //   // Redirect to the signin page
+  //   window.location.href = '/signin';
+  // };
 
   return (
     <div className="col align-items-center">
@@ -239,6 +256,8 @@ function SignupForm() {
     </div>
   );
 }
+
+
 
 export default SignupForm;
 

@@ -48,7 +48,7 @@
 // };
 // export default SignIn;
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import logo from './ffa.png';
 
 function SigninForm() {
@@ -63,6 +63,15 @@ function SigninForm() {
     setPassword(event.target.value);
   };
 
+  // useEffect(() => {
+  //   // Retrieve user data from session storage
+  //   const userData = JSON.parse(sessionStorage.getItem('userData'));
+  //   // Use the user data for signin logic
+
+  //   // Clean up session storage after retrieving user data
+  //   sessionStorage.removeItem('userData');
+  // }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -73,9 +82,9 @@ function SigninForm() {
 
     if (currentUser) {
       if (userType === 'ngos') {
-        window.location.href = '/dashboard';
+        window.location.href = '/homengo';
       } else {
-        window.location.href = '/dashboard';
+        window.location.href = '/home';
       }
     } else {
       alert('Invalid email or password');

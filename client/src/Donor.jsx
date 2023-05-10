@@ -1,12 +1,12 @@
-
+/*eslint disable next line*/
 import {React, useState, useEffect } from 'react';
-
+import NavBar from './NavBar';
 const Donors = () => {
   const [donors, setDonors] = useState([]);
 
   useEffect(() => {
     // Fetch donors data from API endpoint
-    fetch('/donors')
+    fetch('http://localhost:8080/donors')
       .then(response => response.json())
       .then(data => setDonors(data))
       .catch(error => console.error(error));
@@ -14,6 +14,7 @@ const Donors = () => {
 
   return (
     <div>
+    <div><NavBar/></div>
       <h2>Donors</h2>
       {donors.map(donor => (
         <div key={donor.id}>

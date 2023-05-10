@@ -1,28 +1,19 @@
-import mongoose, { connect } from "mongoose"
-import express, { Router } from "express"
+// import { MongoClient } from "mongodb";
 
-// const db = config.get('mongoURI');
-const app =express();
-// const username = "adilhamza2212";
-// const password = "foodforall";
-// const port = 3000;
-app.use(express.json());    
-async function connectDB () {
-    mongoose.connect(
-        "mongodb+srv://adilhamza2212:foodforall@cluster0.tpcxwbr.mongodb.net/?retryWrites=true&w=majority",
-          {
-          useNewUrlParser: true,
-        //   useFindAndModify: false,
-          useUnifiedTopology: true
-        }
-      );
-      const db = mongoose.connection;
-      db.on("error",console.error.bind(console,"connection error: "));
-      db.once("open",()=>console.log("connected successfully"));
-      
-      
-      
-}
-export{connectDB};
+// const connectionString = "mongodb+srv://adilhamza:adilhamza2212@cluster0.kpbfuze.mongodb.net/?retryWrites=true&w=majority";
 
+// const client = new MongoClient(connectionString);
 
+// let conn,db;
+// try {
+//   conn = await client.connect();
+//   db = conn.db("SE");
+//   console.log("Connected to DB: "+ db.databaseName);
+//   let users = db.collection("users");
+//   // console.log(db.collection("users").find());
+// } catch(e) {
+//   console.error(e);
+// }
+// // let db = conn.db("sample_training");
+
+// export default db;

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect, Routes } from 'react-router-dom';
 import './App.css';
 import Signup from './SignUp.jsx';
-import Login from './Login.jsx';
+import SignIn from './SignIn.jsx';
 import Dashboard from './DashBoard.jsx';
 import Restaurants from './Restaurants.jsx';
 import Donors from './Donor.jsx';
@@ -24,11 +24,12 @@ function App() {
   return (
     <Routes>
        <Route path="/signup" element={<Signup />} />
-       <Route path="/login" element={<Login />} />
+       <Route path="/signin" element={<SignIn />} />
+       <Route path="/" element={<Signup />} />
        <Route path="/restaurants" element={<Restaurants/>} />
        <Route path="/donors" element={<Donors/>} />
        <Route path="/NGO" element={<NGO/>} />
-       <Route path="/" element={<Dashboard />} />
+       <Route path="/home" element={<Dashboard />} />
 
     </Routes>
   )

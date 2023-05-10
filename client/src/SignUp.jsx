@@ -159,7 +159,7 @@ function SignupForm() {
   };
   const onLog =(e)=>{
     window.location.href = '/signin';
-  }
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const users = JSON.parse(localStorage.getItem(userType)) || [];
@@ -231,10 +231,11 @@ function SignupForm() {
             Sign Up
           </button>
         </form>
-        <button className="w-100 btn btn-lg btn-dark" type="submit" onSubmit={onLog}>
+        <button className="w-100 btn btn-lg btn-dark" type="submit"onClick={onLog} >
             Already have an account? 
-          </button>
+      </button>
       </div>
+     
     </div>
   );
 }

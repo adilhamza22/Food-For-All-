@@ -7,12 +7,11 @@ function NavBar() {
     <>
       <Navbar bg="primary" variant="dark">
         <Container>
-          <Navbar.Brand href="/">FoodForAll</Navbar.Brand>
+          <Navbar.Brand href="/homengo">FoodForAll</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/home">Dashboard</Nav.Link>
+            <Nav.Link href="/homengo">Dashboard</Nav.Link>
             <Nav.Link href="restaurants">Restaurants</Nav.Link>
             <Nav.Link href="donors">Donors</Nav.Link>
-            <Nav.Link href="NGO">Donate to NGOS</Nav.Link>
 
           </Nav>
         </Container>

@@ -5,6 +5,7 @@ import './App.css';
 import Signup from './SignUp.jsx';
 import SignIn from './SignIn.jsx';
 import Dashboard from './DashBoard.jsx';
+import DashboardNGO from './Dashboard-NGO.jsx';
 import Restaurants from './Restaurants.jsx';
 import Donors from './Donor.jsx';
 import NGO from './NGO.jsx';
@@ -23,13 +24,15 @@ function App() {
 
   return (
     <Routes>
+       <Route path="/" element={<Signup />} />
        <Route path="/signup" element={<Signup />} />
        <Route path="/signin" element={<SignIn />} />
-       <Route path="/" element={<Signup />} />
        <Route path="/restaurants" element={<Restaurants/>} />
        <Route path="/donors" element={<Donors/>} />
        <Route path="/NGO" element={<NGO/>} />
        <Route path="/home" element={<Dashboard />} />
+       <Route path="/homengo" element={<DashboardNGO />} />
+
 
     </Routes>
   )
